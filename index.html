@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toán 10 KNTT - Học Tập Tương Tác</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              300: '#7cc8fb',
+              400: '#36adf6',
+              500: '#0c93e7',
+              600: '#0074c5',
+              700: '#015ca0',
+              800: '#064e84',
+              900: '#0b426e',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- KaTeX CSS & JS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom scrollbar mượt mà */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.6);
+    }
+
+    /* Tinh chỉnh hiển thị KaTeX */
+    .katex {
+      font-size: 1.05em;
+    }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.4rem 0;
+    }
+
+    /* Hiệu ứng chuyển tab mượt */
+    .fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 selection:bg-brand-200 selection:text-brand-900">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-40 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 lg:px-6 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" aria-label="Mở danh mục bài học" class="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <span class="font-extrabold text-lg tracking-tight">∑10</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-tight">Toán 10 KNTT</h1>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300">
+              Chương trình 2025
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Kết nối tri thức với cuộc sống</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div id="header-progress-badge" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 border border-sky-200/70 dark:border-sky-800/60 text-xs font-medium text-sky-700 dark:text-sky-300">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        <span>Học tương tác & Tự chấm điểm</span>
+      </div>
+
+      <!-- Dark Mode Toggle -->
+      <button id="theme-toggle" aria-label="Chuyển đổi giao diện Sáng/Tối" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center gap-2 text-sm font-medium">
+        <i data-lucide="sun" id="icon-sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+        <i data-lucide="moon" id="icon-moon" class="w-4 h-4 block dark:hidden text-slate-600"></i>
+        <span class="hidden sm:inline text-xs" id="theme-label">Chế độ tối</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN WRAPPER ==================== -->
+  <div class="flex min-h-[calc(100vh-4rem)] relative">
+
+    <!-- Mobile Backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"></div>
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar" class="fixed lg:sticky top-16 left-0 z-50 lg:z-30 w-80 h-[calc(100vh-4rem)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
+      <!-- Sidebar Search / Filter -->
+      <div class="p-4 border-b border-slate-100 dark:border-slate-800/80">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="text" id="lesson-search" placeholder="Tìm nhanh bài học..." class="w-full pl-9 pr-3 py-2 text-sm rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-transparent focus:border-brand-500 focus:bg-white dark:focus:bg-slate-800 outline-none transition text-slate-800 dark:text-slate-100 placeholder-slate-400" />
+        </div>
+      </div>
+
+      <!-- Chapters & Lessons List -->
+      <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-3 space-y-2">
+        <!-- Render động bằng JavaScript -->
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="p-3.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/70 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <span>SGK Toán 10 - Tập 1</span>
+        <span class="px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 font-medium">Chuẩn BGD</span>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-10 py-6 max-w-5xl mx-auto">
+
+      <!-- Breadcrumb & Lesson Title Header -->
+      <div id="lesson-header" class="mb-6">
+        <!-- Render động -->
+      </div>
+
+      <!-- 3 Functional Tabs Navigation -->
+      <div class="bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs mb-6 grid grid-cols-3 gap-1.5">
+        <button data-tab="theory" class="tab-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all">
+          <i data-lucide="book-open" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">1. Lý thuyết & Ví dụ</span>
+        </button>
+        <button data-tab="types" class="tab-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all">
+          <i data-lucide="layers" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">2. Phân dạng bài tập</span>
+        </button>
+        <button data-tab="quiz" class="tab-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all">
+          <i data-lucide="file-check-2" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">3. Đề tự luyện 2025</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Tab Content Container -->
+      <div id="tab-content" class="fade-in pb-16">
+        <!-- Nội dung từng tab sẽ được render ở đây -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification (Thay thế alert) -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-slate-800 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 text-sm font-medium">
+      <i data-lucide="info" class="w-5 h-5 text-brand-400 shrink-0"></i>
+      <span id="toast-message">Thông báo</span>
+    </div>
+  </div>
+
+  <!-- ==================== DỮ LIỆU & LOGIC JAVASCRIPT ==================== -->
+  <script>
+    /**
+     * DỮ LIỆU CHƯƠNG TRÌNH TOÁN 10 - KẾT NỐI TRI THỨC VỚI CUỘC SỐNG
+     * Bao gồm đầy đủ 5 chương Tập 1, chi tiết 100% cho Bài 1 & Bài 2 Chương I,
+     * kèm tóm tắt chuẩn xác cho các bài học tiếp theo.
+     */
+    const CURRICULUM_DATA = [
+      {
+        id: "chap1",
+        title: "Chương I: Mệnh đề và Tập hợp",
+        shortTitle: "Chương I",
+        lessons: [
+          {
+            id: "bai1",
+            number: "Bài 1",
+            title: "Mệnh đề",
+            isFull: true,
+            objectives: [
+              "Nhận biết được thế nào là một mệnh đề toán học, mệnh đề chứa biến.",
+              "Xác định được tính đúng sai của một mệnh đề trong các trường hợp đơn giản.",
+              "Lập được mệnh đề phủ định, mệnh đề kéo theo, mệnh đề đảo và hai mệnh đề tương đương.",
+              "Sử dụng thành thạo các ký hiệu $\\forall$ (với mọi) và $\\exists$ (tồn tại) trong các phát biểu toán học."
+            ],
+            // TAB 1: LÝ THUYẾT & VÍ DỤ MINH HỌA
+            theory: [
+              {
+                heading: "1. Mệnh đề và mệnh đề chứa biến",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Định nghĩa Mệnh đề",
+                    content: "Mỗi <strong>mệnh đề</strong> phải hoặc <strong>đúng</strong> hoặc <strong>sai</strong>.<br/>Một mệnh đề không thể vừa đúng vừa sai. Những câu nghi vấn, câu cảm thán, câu cầu khiến không phải là mệnh đề."
+                  },
+                  {
+                    type: "definition",
+                    title: "Mệnh đề chứa biến",
+                    content: "<strong>Mệnh đề chứa biến</strong> là một câu khẳng định chứa một hoặc nhiều biến nhận giá trị trong một tập hợp nào đó. Bản thân mệnh đề chứa biến chưa phải là mệnh đề, nhưng khi thay biến bằng một giá trị cụ thể thì ta được một mệnh đề (đúng hoặc sai)."
+                  },
+                  {
+                    type: "note",
+                    title: "Chú ý",
+                    content: "Các mệnh đề liên quan đến toán học (như khẳng định tính chất hình học, đại số, số học...) được gọi là <strong>mệnh đề toán học</strong>. Ta thường dùng các chữ cái in hoa $P, Q, R, \\dots$ để kí hiệu mệnh đề."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 1",
+                    problem: "Trong các câu sau, câu nào là mệnh đề? Nếu là mệnh đề, hãy xác định tính đúng sai của nó.<br/>a) $\\pi$ là một số vô tỉ.<br/>b) Hôm nay trời đẹp quá!<br/>c) $2x + 1 = 5$ (với $x \\in \\mathbb{R}$).<br/>d) Tổng hai cạnh của một tam giác lớn hơn cạnh thứ ba.",
+                    solution: "a) Là mệnh đề toán học và là <strong>mệnh đề đúng</strong>.<br/>b) Không phải là mệnh đề (đây là câu cảm thán).<br/>c) Không phải là mệnh đề, đây là <strong>mệnh đề chứa biến</strong> (ví dụ với $x = 2$ ta được mệnh đề đúng $5 = 5$; với $x = 0$ ta được mệnh đề sai $1 = 5$).<br/>d) Là mệnh đề toán học và là <strong>mệnh đề đúng</strong> (theo bất đẳng thức tam giác)."
+                  }
+                ]
+              },
+              {
+                heading: "2. Mệnh đề phủ định",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Định nghĩa Mệnh đề phủ định",
+                    content: "Cho mệnh đề $P$. Mệnh đề <strong>\"Không phải $P$\"</strong> được gọi là <strong>mệnh đề phủ định</strong> của mệnh đề $P$ và kí hiệu là $\\overline{P}$.<br/>• Mệnh đề $P$ và mệnh đề phủ định $\\overline{P}$ có tính đúng sai trái ngược nhau: Nếu $P$ đúng thì $\\overline{P}$ sai; nếu $P$ sai thì $\\overline{P}$ đúng."
+                  },
+                  {
+                    type: "note",
+                    title: "Quy tắc phủ định thường gặp",
+                    content: "Để phủ định một mệnh đề, ta thường thêm (hoặc bớt) từ <em>\"không\"</em> hoặc <em>\"không phải\"</em> vào trước vị ngữ của mệnh đề đó. Đối với các quan hệ toán học:<br/>• Phủ định của $=$ là $\\ne$.<br/>• Phủ định của $>$ là $\\le$; phủ định của $<$ là $\\ge$."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 2",
+                    problem: "Phát biểu mệnh đề phủ định của mỗi mệnh đề sau và xét tính đúng sai của mệnh đề phủ định đó:<br/>a) $P$: \"$2025$ chia hết cho $5$\".<br/>b) $Q$: \"$\\sqrt{2} > 2$\".",
+                    solution: "a) $\\overline{P}$: \"$2025$ không chia hết cho $5$\". Vì $P$ đúng nên $\\overline{P}$ là <strong>mệnh đề sai</strong>.<br/>b) $\\overline{Q}$: \"$\\sqrt{2} \\le 2$\". Vì $\\sqrt{2} \\approx 1,414 \\le 2$ nên $\\overline{Q}$ là <strong>mệnh đề đúng</strong>."
+                  }
+                ]
+              },
+              {
+                heading: "3. Mệnh đề kéo theo, mệnh đề đảo và hai mệnh đề tương đương",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Mệnh đề kéo theo ($P \\Rightarrow Q$)",
+                    content: "Cho hai mệnh đề $P$ và $Q$. Mệnh đề <strong>\"Nếu $P$ thì $Q$\"</strong> được gọi là <strong>mệnh đề kéo theo</strong>, kí hiệu là $P \\Rightarrow Q$.<br/>• Mệnh đề $P \\Rightarrow Q$ <strong>chỉ sai khi $P$ đúng và $Q$ sai</strong> (còn lại đều đúng).<br/>• Trong toán học, các định lí thường có dạng $P \\Rightarrow Q$. Khi đó: $P$ là <em>giả thiết</em> (điều kiện đủ để có $Q$), và $Q$ là <em>kết luận</em> (điều kiện cần để có $P$)."
+                  },
+                  {
+                    type: "theorem",
+                    title: "Mệnh đề đảo & Hai mệnh đề tương đương ($P \\Leftrightarrow Q$)",
+                    content: "• Mệnh đề $Q \\Rightarrow P$ được gọi là <strong>mệnh đề đảo</strong> của mệnh đề $P \\Rightarrow Q$. Lưu ý: Mệnh đề đảo của một mệnh đề đúng không nhất thiết là đúng.<br/>• Nếu cả hai mệnh đề $P \\Rightarrow Q$ và $Q \\Rightarrow P$ đều đúng thì ta nói $P$ và $Q$ là <strong>hai mệnh đề tương đương</strong>, kí hiệu là $P \\Leftrightarrow Q$ (đọc là \"$P$ tương đương $Q$\", \"$P$ khi và chỉ khi $Q$\", hoặc \"$P$ là điều kiện cần và đủ để có $Q$\")."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 3",
+                    problem: "Cho hai mệnh đề $P$: \"Tứ giác $ABCD$ là hình thoi\" và $Q$: \"Tứ giác $ABCD$ có hai đường chéo vuông góc với nhau\".<br/>a) Phát biểu mệnh đề $P \\Rightarrow Q$ và xét tính đúng sai.<br/>b) Phát biểu mệnh đề đảo $Q \\Rightarrow P$ và xét tính đúng sai.",
+                    solution: "a) $P \\Rightarrow Q$: \"Nếu tứ giác $ABCD$ là hình thoi thì tứ giác $ABCD$ có hai đường chéo vuông góc với nhau\". Đây là <strong>mệnh đề đúng</strong> (tính chất hình thoi).<br/>b) $Q \\Rightarrow P$: \"Nếu tứ giác $ABCD$ có hai đường chéo vuông góc với nhau thì tứ giác $ABCD$ là hình thoi\". Đây là <strong>mệnh đề sai</strong> (ví dụ hình diều hoặc hình thang cân có hai đường chéo vuông góc nhưng không phải hình thoi)."
+                  }
+                ]
+              },
+              {
+                heading: "4. Mệnh đề chứa kí hiệu $\\forall$ và $\\exists$",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Kí hiệu với mọi ($\\forall$) và tồn tại ($\\exists$)",
+                    content: "• Kí hiệu $\\forall$ đọc là <strong>\"với mọi\"</strong>. Mệnh đề \"$\\forall x \\in M, P(x)$\" đúng nếu với mọi $x_0 \\in M$, $P(x_0)$ là mệnh đề đúng.<br/>• Kí hiệu $\\exists$ đọc là <strong>\"tồn tại\"</strong> (có ít nhất một). Mệnh đề \"$\\exists x \\in M, P(x)$\" đúng nếu có ít nhất một $x_0 \\in M$ sao cho $P(x_0)$ là mệnh đề đúng."
+                  },
+                  {
+                    type: "theorem",
+                    title: "Quy tắc phủ định mệnh đề chứa kí hiệu $\\forall, \\exists$",
+                    content: "• Phủ định của mệnh đề \"$\\forall x \\in M, P(x)$\" là mệnh đề \"$\\exists x \\in M, \\overline{P(x)}$\".<br/>• Phủ định của mệnh đề \"$\\exists x \\in M, P(x)$\" là mệnh đề \"$\\forall x \\in M, \\overline{P(x)}$\"."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 4",
+                    problem: "Viết mệnh đề phủ định của mỗi mệnh đề sau và xác định tính đúng sai của nó:<br/>a) $P$: \"$\\forall x \\in \\mathbb{R}, x^2 + 1 > 0$\".<br/>b) $Q$: \"$\\exists n \\in \\mathbb{N}, n^2 = 2$\".",
+                    solution: "a) $\\overline{P}$: \"$\\exists x \\in \\mathbb{R}, x^2 + 1 \\le 0$\". Vì $x^2 \\ge 0 \\Rightarrow x^2 + 1 \\ge 1 > 0$ với mọi $x \\in \\mathbb{R}$ nên $P$ đúng, suy ra $\\overline{P}$ <strong>sai</strong>.<br/>b) $\\overline{Q}$: \"$\\forall n \\in \\mathbb{N}, n^2 \\ne 2$\". Vì không có số tự nhiên nào bình phương bằng $2$ nên $Q$ sai, suy ra $\\overline{Q}$ <strong>đúng</strong>."
+                  }
+                ]
+              }
+            ],
+            // TAB 2: PHÂN DẠNG BÀI TẬP
+            problemTypes: [
+              {
+                typeTitle: "Dạng 1: Nhận biết mệnh đề và xét tính đúng sai",
+                method: "• Bước 1: Kiểm tra câu phát biểu có phải là câu khẳng định có tính đúng hoặc sai xác định hay không (loại bỏ câu hỏi, câu cảm thán, câu mệnh lệnh và câu chứa biến chưa gán giá trị).<br/>• Bước 2: Vận dụng kiến thức toán học và thực tiễn để kết luận mệnh đề đó Đúng hay Sai.",
+                exercises: [
+                  {
+                    question: "Bài 1.1: Trong các phát biểu sau, phát biểu nào là mệnh đề? Xét tính đúng sai của mỗi mệnh đề đó.<br/>a) Số $15$ là số nguyên tố.<br/>b) Bạn đã làm bài tập Toán chưa?<br/>c) Phương trình $x^2 - 3x + 2 = 0$ có hai nghiệm phân biệt.<br/>d) $x^2 + y^2 > 0$.",
+                    solution: "• <strong>a) Là mệnh đề</strong>. Đây là <strong>mệnh đề sai</strong> vì $15$ chia hết cho $3$ và $5$ (là hợp số).<br/>• <strong>b) Không phải là mệnh đề</strong> vì đây là câu nghi vấn.<br/>• <strong>c) Là mệnh đề</strong>. Đây là <strong>mệnh đề đúng</strong> vì phương trình có hai nghiệm phân biệt là $x = 1$ và $x = 2$.<br/>• <strong>d) Không phải là mệnh đề</strong>, đây là mệnh đề chứa biến $x, y$."
+                  },
+                  {
+                    question: "Bài 1.2: Cho mệnh đề chứa biến $P(n)$: \"$n^2 + n + 1$ là một số lẻ\" với $n \\in \\mathbb{N}$. Xét tính đúng sai của $P(3)$ và $P(4)$.",
+                    solution: "• Với $n = 3$: $P(3)$ là \"$3^2 + 3 + 1 = 13$ là một số lẻ\". Đây là <strong>mệnh đề đúng</strong>.<br/>• Với $n = 4$: $P(4)$ là \"$4^2 + 4 + 1 = 21$ là một số lẻ\". Đây cũng là <strong>mệnh đề đúng</strong>.<br/><em>(Mở rộng: Với mọi $n \\in \\mathbb{N}$, $n^2 + n = n(n+1)$ luôn chẵn nên $n^2 + n + 1$ luôn lẻ).</em>"
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 2: Lập mệnh đề phủ định",
+                method: "• Để lập mệnh đề phủ định $\\overline{P}$ của mệnh đề $P$, ta phủ định tính chất khẳng định trong $P$ (thêm/bớt \"không\", đổi dấu $= \\leftrightarrow \\ne$, $> \\leftrightarrow \\le$, $< \\leftrightarrow \\ge$).<br/>• Nhớ quy tắc: $P$ đúng $\\Leftrightarrow \\overline{P}$ sai.",
+                exercises: [
+                  {
+                    question: "Bài 2.1: Nêu mệnh đề phủ định của các mệnh đề sau và cho biết tính đúng sai của mệnh đề phủ định:<br/>a) $A$: \"Số $2024$ chia hết cho $4$\".<br/>b) $B$: \"Hai đường thẳng phân biệt cùng vuông góc với một đường thẳng thứ ba thì song song với nhau\".",
+                    solution: "a) $\\overline{A}$: \"Số $2024$ không chia hết cho $4$\". Vì $2024 = 4 \\times 506$ nên $A$ đúng, do đó $\\overline{A}$ là <strong>mệnh đề sai</strong>.<br/>b) $\\overline{B}$: \"Hai đường thẳng phân biệt cùng vuông góc với một đường thẳng thứ ba thì không song song với nhau\". Trong mặt phẳng, $B$ đúng nên $\\overline{B}$ là <strong>mệnh đề sai</strong> (nếu xét trong không gian thì $B$ sai và $\\overline{B}$ đúng)."
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 3: Mệnh đề kéo theo, mệnh đề đảo và điều kiện cần, điều kiện đủ",
+                method: "• Mệnh đề $P \\Rightarrow Q$ phát biểu dưới dạng: \"Nếu $P$ thì $Q$\".<br/>• Khi $P \\Rightarrow Q$ là định lí đúng: $P$ là <strong>điều kiện đủ</strong> để có $Q$; $Q$ là <strong>điều kiện cần</strong> để có $P$.<br/>• Khi $P \\Leftrightarrow Q$ đúng: $P$ là <strong>điều kiện cần và đủ</strong> để có $Q$ (và ngược lại).",
+                exercises: [
+                  {
+                    question: "Bài 3.1: Phát biểu lại định lí sau sử dụng thuật ngữ \"điều kiện cần\" và \"điều kiện đủ\":<br/>\"Nếu một số tự nhiên có chữ số tận cùng là $0$ thì số đó chia hết cho $5$\".",
+                    solution: "Đặt $P$: \"Số tự nhiên $n$ có chữ số tận cùng là $0$\", $Q$: \"Số tự nhiên $n$ chia hết cho $5$\".<br/>• Dùng <strong>điều kiện đủ</strong>: \"Số tự nhiên có chữ số tận cùng là $0$ là <em>điều kiện đủ</em> để số đó chia hết cho $5$\".<br/>• Dùng <strong>điều kiện cần</strong>: \"Số tự nhiên chia hết cho $5$ là <em>điều kiện cần</em> để số đó có chữ số tận cùng là $0$\"."
+                  },
+                  {
+                    question: "Bài 3.2: Cho hai mệnh đề $P$: \"Tam giác $ABC$ đều\" và $Q$: \"Tam giác $ABC$ cân và có một góc bằng $60^\\circ$\". Hãy lập mệnh đề $P \\Leftrightarrow Q$ và xét tính đúng sai.",
+                    solution: "Mệnh đề $P \\Leftrightarrow Q$: \"Tam giác $ABC$ đều <em>khi và chỉ khi</em> tam giác $ABC$ cân và có một góc bằng $60^\\circ$\".<br/>Đây là <strong>mệnh đề đúng</strong> vì cả hai chiều $P \\Rightarrow Q$ và $Q \\Rightarrow P$ đều đúng theo định lí hình học."
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 4: Mệnh đề chứa kí hiệu $\\forall, \\exists$ và phép phủ định",
+                method: "• Muốn chứng minh \"$\\forall x \\in M, P(x)$\" <strong>sai</strong>, chỉ cần chỉ ra <strong>một phản ví dụ</strong> $x_0 \\in M$ sao cho $P(x_0)$ sai.<br/>• Muốn chứng minh \"$\\exists x \\in M, P(x)$\" <strong>đúng</strong>, chỉ cần chỉ ra <strong>một giá trị</strong> $x_0 \\in M$ sao cho $P(x_0)$ đúng.<br/>• Khi phủ định: đổi $\\forall \\leftrightarrow \\exists$ và phủ định biểu thức phía sau.",
+                exercises: [
+                  {
+                    question: "Bài 4.1: Xét tính đúng sai của các mệnh đề sau và lập mệnh đề phủ định của chúng:<br/>a) $M$: \"$\\forall n \\in \\mathbb{N}, n^2 \\ge n$\".<br/>b) $N$: \"$\\exists x \\in \\mathbb{Q}, x^2 = 3$\".<br/>c) $K$: \"$\\forall x \\in \\mathbb{R}, x^2 - 4x + 5 > 0$\".",
+                    solution: "a) Với mọi $n \\in \\mathbb{N}$, ta có $n^2 - n = n(n-1) \\ge 0 \\Rightarrow n^2 \\ge n$. Vậy $M$ <strong>đúng</strong>.<br/>Phủ định: $\\overline{M}$: \"$\\exists n \\in \\mathbb{N}, n^2 < n$\".<br/><br/>b) Phương trình $x^2 = 3 \\Leftrightarrow x = \\pm\\sqrt{3} \\notin \\mathbb{Q}$. Vậy $N$ <strong>sai</strong>.<br/>Phủ định: $\\overline{N}$: \"$\\forall x \\in \\mathbb{Q}, x^2 \\ne 3$\".<br/><br/>c) Ta có $x^2 - 4x + 5 = (x - 2)^2 + 1 \\ge 1 > 0, \\forall x \\in \\mathbb{R}$. Vậy $K$ <strong>đúng</strong>.<br/>Phủ định: $\\overline{K}$: \"$\\exists x \\in \\mathbb{R}, x^2 - 4x + 5 \\le 0$\"."
+                  }
+                ]
+              }
+            ],
+            // TAB 3: ĐỀ TỰ LUYỆN TƯƠNG TÁC (CẤU TRÚC MỚI 2025)
+            quiz: {
+              part1: [
+                {
+                  id: "b1_p1_q1",
+                  question: "Câu nào sau đây là một mệnh đề toán học?",
+                  options: [
+                    "Hôm nay trời mưa to quá!",
+                    "Số $17$ là một số nguyên tố.",
+                    "$2x + 3 > 0$ với $x \\in \\mathbb{R}$.",
+                    "Em hãy làm bài tập về nhà đi!"
+                  ],
+                  correct: 1,
+                  explanation: "\"Số $17$ là một số nguyên tố\" là câu khẳng định có tính đúng sai xác định (đúng) nên là mệnh đề toán học. Các câu còn lại là câu cảm thán, mệnh đề chứa biến và câu cầu khiến."
+                },
+                {
+                  id: "b1_p1_q2",
+                  question: "Mệnh đề phủ định của mệnh đề $P$: \"$\\forall x \\in \\mathbb{R}, x^2 + 2x + 5 > 0$\" là:",
+                  options: [
+                    "$\\overline{P}$: \"$\\forall x \\in \\mathbb{R}, x^2 + 2x + 5 \\le 0$\".",
+                    "$\\overline{P}$: \"$\\exists x \\in \\mathbb{R}, x^2 + 2x + 5 < 0$\".",
+                    "$\\overline{P}$: \"$\\exists x \\in \\mathbb{R}, x^2 + 2x + 5 \\le 0$\".",
+                    "$\\overline{P}$: \"$\\forall x \\in \\mathbb{R}, x^2 + 2x + 5 < 0$\"."
+                  ],
+                  correct: 2,
+                  explanation: "Phủ định của kí hiệu $\\forall$ là $\\exists$, và phủ định của bất đẳng thức $>$ là $\\le$. Do đó $\\overline{P}$: \"$\\exists x \\in \\mathbb{R}, x^2 + 2x + 5 \\le 0$\"."
+                },
+                {
+                  id: "b1_p1_q3",
+                  question: "Trong các mệnh đề sau, mệnh đề nào <strong>sai</strong>?",
+                  options: [
+                    "$\\exists n \\in \\mathbb{N}, n^2 = n$.",
+                    "$\\forall x \\in \\mathbb{R}, x^2 \\ge 0$.",
+                    "$\\exists x \\in \\mathbb{R}, x^2 + 1 = 0$.",
+                    "$\\forall n \\in \\mathbb{N}, 2n$ là số chẵn."
+                  ],
+                  correct: 2,
+                  explanation: "Với mọi $x \\in \\mathbb{R}$, ta luôn có $x^2 \\ge 0 \\Rightarrow x^2 + 1 \\ge 1 > 0$. Vì vậy không tồn tại số thực $x$ nào để $x^2 + 1 = 0$."
+                },
+                {
+                  id: "b1_p1_q4",
+                  question: "Cho mệnh đề $P \\Rightarrow Q$: \"Nếu tứ giác $ABCD$ là hình chữ nhật thì tứ giác $ABCD$ có hai đường chéo bằng nhau\". Phát biểu nào sau đây đúng?",
+                  options: [
+                    "$P$ là điều kiện cần để có $Q$.",
+                    "$Q$ là điều kiện đủ để có $P$.",
+                    "$P$ là điều kiện đủ để có $Q$.",
+                    "$P$ và $Q$ là hai mệnh đề tương đương."
+                  ],
+                  correct: 2,
+                  explanation: "Vì $P \\Rightarrow Q$ là định lí đúng nên $P$ (giả thiết) là điều kiện đủ để có $Q$ (kết luận), và $Q$ là điều kiện cần để có $P$. Mệnh đề đảo sai (hình thang cân cũng có hai đường chéo bằng nhau)."
+                },
+                {
+                  id: "b1_p1_q5",
+                  question: "Cho mệnh đề chứa biến $P(x)$: \"$x^2 - 5x + 6 = 0$\". Giá trị nào của $x$ sau đây làm cho $P(x)$ trở thành mệnh đề <strong>đúng</strong>?",
+                  options: [
+                    "$x = -2$",
+                    "$x = 3$",
+                    "$x = 1$",
+                    "$x = -3$"
+                  ],
+                  correct: 1,
+                  explanation: "Thay $x = 3$ vào phương trình ta được $3^2 - 5(3) + 6 = 9 - 15 + 6 = 0$ (đúng)."
+                }
+              ],
+              part2: [
+                {
+                  id: "b1_p2_q1",
+                  question: "Có bao nhiêu phát biểu là <strong>mệnh đề</strong> trong các câu sau đây?<br/>(1) $3 + 4 = 8$.<br/>(2) Việt Nam nằm ở khu vực Đông Nam Á.<br/>(3) $x + 2y = 5$.<br/>(4) Trời hôm nay nóng quá!<br/>(5) Số $0$ là số tự nhiên nhỏ nhất.",
+                  answer: "3",
+                  unit: "phát biểu",
+                  explanation: "Có <strong>3</strong> mệnh đề là (1) (mệnh đề sai), (2) (mệnh đề đúng) và (5) (mệnh đề đúng). Câu (3) là mệnh đề chứa biến, câu (4) là câu cảm thán."
+                },
+                {
+                  id: "b1_p2_q2",
+                  question: "Có bao nhiêu giá trị nguyên của $x$ thuộc đoạn $[-3; 3]$ để mệnh đề chứa biến $P(x)$: \"$x^2 - 4 < 0$\" trở thành mệnh đề <strong>đúng</strong>?",
+                  answer: "3",
+                  unit: "giá trị",
+                  explanation: "Ta có $x^2 - 4 < 0 \\Leftrightarrow -2 < x < 2$. Vì $x \\in \\mathbb{Z}$ nên $x \\in \\{-1; 0; 1\\}$. Vậy có <strong>3</strong> giá trị nguyên thỏa mãn."
+                },
+                {
+                  id: "b1_p2_q3",
+                  question: "Cho mệnh đề chứa biến $Q(n)$: \"$n$ là số nguyên tố nhỏ hơn $15$\" ($n \\in \\mathbb{N}$). Có tất cả bao nhiêu số tự nhiên $n$ làm cho $Q(n)$ là mệnh đề <strong>đúng</strong>?",
+                  answer: "6",
+                  unit: "số",
+                  explanation: "Các số nguyên tố nhỏ hơn $15$ là: $2, 3, 5, 7, 11, 13$. Tổng cộng có <strong>6</strong> số."
+                }
+              ],
+              part3: [
+                {
+                  id: "b1_p3_q1",
+                  question: "Xét tính đúng sai của các mệnh đề sau và giải thích ngắn gọn:<br/>a) $P$: \"$\\forall x \\in \\mathbb{R}, (x - 1)^2 \\ne x - 1$\".<br/>b) $Q$: \"$\\exists n \\in \\mathbb{N}, n^2 + 1$ chia hết cho $4$\".",
+                  rubric: "• <strong>Ý a (1.5 điểm):</strong><br/>- Kết luận: Mệnh đề $P$ <strong>sai</strong> (0.5đ).<br/>- Giải thích: Chỉ ra phản ví dụ $x = 1 \\in \\mathbb{R}$ (hoặc $x = 2$), khi đó $(1 - 1)^2 = 0 = 1 - 1$ (1.0đ).<br/><br/>• <strong>Ý b (1.5 điểm):</strong><br/>- Kết luận: Mệnh đề $Q$ <strong>sai</strong> (0.5đ).<br/>- Giải thích: Nếu $n = 2k$ (chẵn) thì $n^2 + 1 = 4k^2 + 1$ chia $4$ dư $1$. Nếu $n = 2k + 1$ (lẻ) thì $n^2 + 1 = 4k^2 + 4k + 2$ chia $4$ dư $2$. Vậy $n^2 + 1$ không bao giờ chia hết cho $4$ với mọi $n \\in \\mathbb{N}$ (1.0đ)."
+                },
+                {
+                  id: "b1_p3_q2",
+                  question: "Cho tam giác $ABC$. Xét hai mệnh đề:<br/>$P$: \"Tam giác $ABC$ vuông tại $A$\" và $Q$: \"$BC^2 = AB^2 + AC^2$\".<br/>Hãy phát biểu mệnh đề $P \\Leftrightarrow Q$ theo hai cách khác nhau và xét tính đúng sai của nó.",
+                  rubric: "• <strong>Cách phát biểu 1 (0.5 điểm):</strong> \"Tam giác $ABC$ vuông tại $A$ <em>khi và chỉ khi</em> $BC^2 = AB^2 + AC^2$\".<br/>• <strong>Cách phát biểu 2 (0.5 điểm):</strong> \"Tam giác $ABC$ vuông tại $A$ là <em>điều kiện cần và đủ</em> để $BC^2 = AB^2 + AC^2$\".<br/>• <strong>Tính đúng sai (0.5 điểm):</strong> Đây là <strong>mệnh đề đúng</strong> vì theo định lí Pythagore thuận ($P \\Rightarrow Q$ đúng) và định lí Pythagore đảo ($Q \\Rightarrow P$ đúng)."
+                }
+              ]
+            }
+          },
+          {
+            id: "bai2",
+            number: "Bài 2",
+            title: "Tập hợp và các phép toán trên tập hợp",
+            isFull: true,
+            objectives: [
+              "Biết cách mô tả một tập hợp bằng hai cách (liệt kê phần tử và chỉ ra tính chất đặc trưng).",
+              "Nhận biết được khái niệm tập con, hai tập hợp bằng nhau, tập rỗng ($\\emptyset$).",
+              "Thực hiện thành thạo các phép toán giao ($\\cap$), hợp ($\\cup$), hiệu ($\\setminus$) và phần bù ($C_U A$).",
+              "Biểu diễn và tìm giao, hợp, hiệu của các khoảng, đoạn, nửa khoảng trên trục số thực $\\mathbb{R}$."
+            ],
+            // TAB 1: LÝ THUYẾT & VÍ DỤ MINH HỌA
+            theory: [
+              {
+                heading: "1. Các khái niệm cơ bản về tập hợp",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Cách xác định tập hợp & Tập rỗng",
+                    content: "• Có hai cách xác định một tập hợp:<br/>  1. <strong>Liệt kê các phần tử</strong> của tập hợp (viết trong dấu ngoặc nhọn $\\{\\dots\\}$, các phần tử cách nhau bởi dấu chấm phẩy $;$).<br/>  2. <strong>Chỉ ra tính chất đặc trưng</strong> cho các phần tử của tập hợp: $A = \\{x \\in X \\mid P(x)\\}$.<br/>• Tập hợp không chứa phần tử nào được gọi là <strong>tập rỗng</strong>, kí hiệu là $\\emptyset$."
+                  },
+                  {
+                    type: "theorem",
+                    title: "Tập hợp con và Hai tập hợp bằng nhau",
+                    content: "• Nếu mọi phần tử của tập hợp $T$ đều là phần tử của tập hợp $S$ thì ta nói $T$ là một <strong>tập hợp con</strong> (tập con) của $S$, kí hiệu là $T \\subset S$ (hoặc $S \\supset T$).<br/>• Quy ước: $\\emptyset \\subset A$ và $A \\subset A$ với mọi tập hợp $A$. Nếu $A$ có $n$ phần tử thì $A$ có $2^n$ tập con.<br/>• Khi $A \\subset B$ và $B \\subset A$ thì ta nói hai tập hợp $A$ và $B$ <strong>bằng nhau</strong>, kí hiệu là $A = B$."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 1",
+                    problem: "Viết tập hợp $A = \\{x \\in \\mathbb{Z} \\mid (x^2 - 4)(2x - 1) = 0\\}$ bằng cách liệt kê các phần tử và tìm tất cả các tập con của $A$.",
+                    solution: "Giải phương trình $(x^2 - 4)(2x - 1) = 0 \\Leftrightarrow \\left[\\begin{array}{l} x = 2 \\\\ x = -2 \\\\ x = \\frac{1}{2} \\end{array}\\right.$.<br/>Vì $x \\in \\mathbb{Z}$ nên loại $x = \\frac{1}{2}$. Vậy $A = \\{-2; 2\\}$.<br/>Tập $A$ có $2$ phần tử nên có $2^2 = 4$ tập con là: $\\emptyset$, $\\{-2\\}$, $\\{2\\}$, $\\{-2; 2\\}$."
+                  }
+                ]
+              },
+              {
+                heading: "2. Các tập hợp số thường dùng",
+                blocks: [
+                  {
+                    type: "note",
+                    title: "Mối quan hệ bao hàm giữa các tập số",
+                    content: "$$\\mathbb{N}^* \\subset \\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$$<br/>Trong đó: $\\mathbb{N}$ (số tự nhiên), $\\mathbb{Z}$ (số nguyên), $\\mathbb{Q}$ (số hữu tỉ), $\\mathbb{R}$ (số thực)."
+                  },
+                  {
+                    type: "definition",
+                    title: "Các tập con thường dùng của $\\mathbb{R}$",
+                    content: "Với $a < b$, ta có các kí hiệu khoảng, đoạn, nửa khoảng:<br/>• <strong>Khoảng:</strong> $(a; b) = \\{x \\in \\mathbb{R} \\mid a < x < b\\}$; $(a; +\\infty) = \\{x \\in \\mathbb{R} \\mid x > a\\}$; $(-\\infty; b) = \\{x \\in \\mathbb{R} \\mid x < b\\}$.<br/>• <strong>Đoạn:</strong> $[a; b] = \\{x \\in \\mathbb{R} \\mid a \\le x \\le b\\}$.<br/>• <strong>Nửa khoảng:</strong> $[a; b) = \\{x \\in \\mathbb{R} \\mid a \\le x < b\\}$; $(a; b] = \\{x \\in \\mathbb{R} \\mid a < x \\le b\\}$; $[a; +\\infty) = \\{x \\in \\mathbb{R} \\mid x \\ge a\\}$; $(-\\infty; b] = \\{x \\in \\mathbb{R} \\mid x \\le b\\}$."
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 2",
+                    problem: "Sử dụng kí hiệu khoảng, đoạn, nửa khoảng để viết lại các tập hợp sau:<br/>a) $A = \\{x \\in \\mathbb{R} \\mid -3 < x \\le 5\\}$.<br/>b) $B = \\{x \\in \\mathbb{R} \\mid x \\ge -1\\}$.",
+                    solution: "a) $A = (-3; 5]$.<br/>b) $B = [-1; +\\infty)$."
+                  }
+                ]
+              },
+              {
+                heading: "3. Các phép toán trên tập hợp",
+                blocks: [
+                  {
+                    type: "definition",
+                    title: "Giao, Hợp, Hiệu và Phần bù của hai tập hợp",
+                    content: "• <strong>Giao của hai tập hợp:</strong> $A \\cap B = \\{x \\mid x \\in A \\text{ và } x \\in B\\}$.<br/>• <strong>Hợp của hai tập hợp:</strong> $A \\cup B = \\{x \\mid x \\in A \\text{ hoặc } x \\in B\\}$.<br/>• <strong>Hiệu của hai tập hợp:</strong> $A \\setminus B = \\{x \\mid x \\in A \\text{ và } x \\notin B\\}$.<br/>• <strong>Phần bù:</strong> Khi $A \\subset E$ thì $E \\setminus A$ được gọi là <em>phần bù</em> của $A$ trong $E$, kí hiệu là $C_E A$."
+                  },
+                  {
+                    type: "theorem",
+                    title: "Công thức đếm số phần tử (Biểu đồ Ven)",
+                    content: "Nếu $A$ và $B$ là các tập hợp hữu hạn thì số phần tử của $A \\cup B$ được tính bởi công thức:<br/>$$n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$$"
+                  }
+                ],
+                examples: [
+                  {
+                    title: "Ví dụ 3",
+                    problem: "Cho hai tập hợp $A = (-2; 4]$ và $B = [1; 7)$. Hãy xác định $A \\cap B$, $A \\cup B$, $A \\setminus B$ và $C_{\\mathbb{R}} A$.",
+                    solution: "Biểu diễn các tập hợp lên trục số thực:<br/>• $A \\cap B = [1; 4]$ (lấy phần chung của hai tập hợp).<br/>• $A \\cup B = (-2; 7)$ (lấy toàn bộ phần thuộc ít nhất một trong hai tập).<br/>• $A \\setminus B = (-2; 1)$ (thuộc $A$ nhưng bỏ đi phần thuộc $B$).<br/>• $C_{\\mathbb{R}} A = \\mathbb{R} \\setminus A = (-\\infty; -2] \\cup (4; +\\infty)$."
+                  }
+                ]
+              }
+            ],
+            // TAB 2: PHÂN DẠNG BÀI TẬP
+            problemTypes: [
+              {
+                typeTitle: "Dạng 1: Xác định tập hợp, số phần tử và tìm tập con",
+                method: "• Giải phương trình hoặc bất phương trình trong điều kiện đặc trưng để liệt kê đầy đủ các phần tử (chú ý tập số $x \\in \\mathbb{N}, \\mathbb{Z}, \\mathbb{Q}, \\mathbb{R}$).<br/>• Tập hợp có $n$ phần tử thì có $2^n$ tập con.",
+                exercises: [
+                  {
+                    question: "Bài 1.1: Liệt kê các phần tử của tập hợp $B = \\{x \\in \\mathbb{N} \\mid (2x^2 - 5x + 2)(x^2 - 9) = 0\\}$ và tính số tập con của $B$.",
+                    solution: "Ta có $(2x^2 - 5x + 2)(x^2 - 9) = 0 \\Leftrightarrow \\left[\\begin{array}{l} 2x^2 - 5x + 2 = 0 \\\\ x^2 - 9 = 0 \\end{array}\\right. \\Leftrightarrow \\left[\\begin{array}{l} x = 2 \\\\ x = \\frac{1}{2} \\\\ x = 3 \\\\ x = -3 \\end{array}\\right.$.<br/>Vì $x \\in \\mathbb{N}$ nên chỉ nhận $x = 2$ và $x = 3$.<br/>Vậy $B = \\{2; 3\\}$. Tập $B$ có $2$ phần tử nên có $2^2 = 4$ tập con."
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 2: Các phép toán giao, hợp, hiệu, phần bù trên tập hợp hữu hạn",
+                method: "• $A \\cap B$: liệt kê các phần tử xuất hiện ở <strong>cả hai</strong> tập $A$ và $B$.<br/>• $A \\cup B$: gộp tất cả các phần tử của $A$ và $B$ (mỗi phần tử chỉ viết một lần).<br/>• $A \\setminus B$: lấy các phần tử thuộc $A$ rồi gạch bỏ những phần tử nào có mặt trong $B$.",
+                exercises: [
+                  {
+                    question: "Bài 2.1: Cho $E = \\{1; 2; 3; 4; 5; 6; 7; 8\\}$, $A = \\{1; 2; 4; 6\\}$ và $B = \\{2; 3; 4; 5; 7\\}$. Tìm $A \\cap B$, $A \\cup B$, $A \\setminus B$, $B \\setminus A$ và $C_E(A \\cup B)$.",
+                    solution: "• $A \\cap B = \\{2; 4\\}$.<br/>• $A \\cup B = \\{1; 2; 3; 4; 5; 6; 7\\}$.<br/>• $A \\setminus B = \\{1; 6\\}$.<br/>• $B \\setminus A = \\{3; 5; 7\\}$.<br/>• Vì $(A \\cup B) \\subset E$ nên $C_E(A \\cup B) = E \\setminus (A \\cup B) = \\{8\\}$."
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 3: Các phép toán trên tập con của tập số thực $\\mathbb{R}$",
+                method: "• Vẽ trục số thực, biểu diễn từng tập hợp lên trục số (dùng ngoặc vuông $[$ $]$ cho đầu mút lấy dấu $=$, ngoặc tròn $($ $)$ cho đầu mút không lấy dấu $=$).<br/>• Gạch bỏ phần không thuộc tập hợp để nhìn trực quan vùng kết quả.<br/>• <strong>Lưu ý biên:</strong> Khi lấy hiệu $A \\setminus B$ hoặc phần bù, ngoặc tròn đổi thành ngoặc vuông và ngược lại.",
+                exercises: [
+                  {
+                    question: "Bài 3.1: Cho $A = (-\\infty; 3]$ và $B = (-1; 5)$. Tìm $A \\cap B$, $A \\cup B$, $A \\setminus B$ và $B \\setminus A$.",
+                    solution: "Biểu diễn trên trục số:<br/>• $A \\cap B = (-1; 3]$.<br/>• $A \\cup B = (-\\infty; 5)$.<br/>• $A \\setminus B = (-\\infty; -1]$ (tại $-1$, vì $-1 \\notin B$ nên $-1$ vẫn còn lại trong $A \\setminus B$, do đó dùng ngoặc vuông $]$).<br/>• $B \\setminus A = (3; 5)$ (tại $3$, vì $3 \\in A$ nên bị loại khỏi $B \\setminus A$, do đó dùng ngoặc tròn $($)."
+                  },
+                  {
+                    question: "Bài 3.2: Tìm tất cả các giá trị của tham số $m$ để hai tập hợp $A = [m - 1; m + 2]$ và $B = (-2; 4)$ có giao khác rỗng ($A \\cap B \\ne \\emptyset$).",
+                    solution: "Ta tìm điều kiện để $A \\cap B = \\emptyset$ rồi lấy phủ định:<br/>$A \\cap B = \\emptyset \\Leftrightarrow \\left[\\begin{array}{l} m + 2 \\le -2 \\\\ m - 1 \\ge 4 \\end{array}\\right. \\Leftrightarrow \\left[\\begin{array}{l} m \\le -4 \\\\ m \\ge 5 \\end{array}\\right.$.<br/>Suy ra $A \\cap B \\ne \\emptyset \\Leftrightarrow -4 < m < 5$."
+                  }
+                ]
+              },
+              {
+                typeTitle: "Dạng 4: Giải toán thực tế bằng biểu đồ Ven",
+                method: "• Gọi $A, B$ là tập hợp các đối tượng thỏa mãn từng điều kiện.<br/>• Sử dụng công thức $n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$ hoặc vẽ biểu đồ Ven để lập phương trình tìm đại lượng chưa biết.",
+                exercises: [
+                  {
+                    question: "Bài 4.1: Lớp 10A có $45$ học sinh, trong đó có $25$ em thích môn Toán, $20$ em thích môn Văn, và $18$ em thích cả hai môn Toán và Văn. Hỏi có bao nhiêu học sinh của lớp 10A không thích cả hai môn Toán và Văn?",
+                    solution: "Gọi $A$ là tập hợp học sinh thích môn Toán ($n(A) = 25$), $B$ là tập hợp học sinh thích môn Văn ($n(B) = 20$).<br/>Tập hợp học sinh thích cả hai môn là $A \\cap B$ với $n(A \\cap B) = 18$.<br/>Số học sinh thích ít nhất một trong hai môn Toán hoặc Văn là:<br/>$$n(A \\cup B) = n(A) + n(B) - n(A \\cap B) = 25 + 20 - 18 = 27 \\text{ (học sinh)}.$$<br/>Vậy số học sinh không thích cả hai môn là: $45 - 27 = 18$ (học sinh)."
+                  }
+                ]
+              }
+            ],
+            // TAB 3: ĐỀ TỰ LUYỆN TƯƠNG TÁC (CẤU TRÚC MỚI 2025)
+            quiz: {
+              part1: [
+                {
+                  id: "b2_p1_q1",
+                  question: "Cho tập hợp $A = \\{x \\in \\mathbb{N} \\mid x \\le 4\\}$. Cách viết liệt kê phần tử của tập hợp $A$ là:",
+                  options: [
+                    "$A = \\{1; 2; 3; 4\\}$",
+                    "$A = \\{0; 1; 2; 3; 4\\}$",
+                    "$A = \\{0; 1; 2; 3\\}$",
+                    "$A = \\{1; 2; 3\\}$"
+                  ],
+                  correct: 1,
+                  explanation: "Tập số tự nhiên $\\mathbb{N}$ bao gồm cả số $0$. Vì $x \\le 4$ nên $A = \\{0; 1; 2; 3; 4\\}$."
+                },
+                {
+                  id: "b2_p1_q2",
+                  question: "Cho hai tập hợp $X = \\{1; 3; 5; 7\\}$ và $Y = \\{1; 2; 3; 4; 5\\}$. Tập hợp $X \\cap Y$ là:",
+                  options: [
+                    "$\\{1; 2; 3; 4; 5; 7\\}$",
+                    "$\\{1; 3; 5\\}$",
+                    "$\\{7\\}$",
+                    "$\\{2; 4\\}$"
+                  ],
+                  correct: 1,
+                  explanation: "Giao của hai tập hợp $X \\cap Y$ gồm các phần tử chung của cả $X$ và $Y$, đó là $\\{1; 3; 5\\}$."
+                },
+                {
+                  id: "b2_p1_q3",
+                  question: "Tập hợp $M = \\{x \\in \\mathbb{R} \\mid -2 < x \\le 5\\}$ được viết dưới dạng khoảng, đoạn, nửa khoảng là:",
+                  options: [
+                    "$[-2; 5]$",
+                    "$(-2; 5)$",
+                    "$(-2; 5]$",
+                    "$[-2; 5)$"
+                  ],
+                  correct: 2,
+                  explanation: "Tại $-2$ có dấu $<$ nên dùng ngoặc tròn $($, tại $5$ có dấu $\\le$ nên dùng ngoặc vuông $]$. Do đó $M = (-2; 5]$."
+                },
+                {
+                  id: "b2_p1_q4",
+                  question: "Cho hai tập hợp $A = (-3; 2)$ và $B = [0; 5]$. Tập hợp $A \\cup B$ bằng:",
+                  options: [
+                    "$[0; 2)$",
+                    "$(-3; 5]$",
+                    "$(-3; 0)$",
+                    "$[2; 5]$"
+                  ],
+                  correct: 1,
+                  explanation: "Hợp của hai tập hợp $(-3; 2)$ và $[0; 5]$ trải dài từ $-3$ (không lấy) đến $5$ (lấy), tức là $(-3; 5]$."
+                },
+                {
+                  id: "b2_p1_q5",
+                  question: "Phần bù của tập hợp $A = (-\\infty; 2]$ trong $\\mathbb{R}$ là:",
+                  options: [
+                    "$(2; +\\infty)$",
+                    "$[2; +\\infty)$",
+                    "$(-\\infty; 2)$",
+                    "$(-2; +\\infty)$"
+                  ],
+                  correct: 0,
+                  explanation: "$C_{\\mathbb{R}} A = \\mathbb{R} \\setminus (-\\infty; 2] = (2; +\\infty)$."
+                }
+              ],
+              part2: [
+                {
+                  id: "b2_p2_q1",
+                  question: "Tập hợp $A = \\{a; b; c; d\\}$ có tất cả bao nhiêu tập hợp con?",
+                  answer: "16",
+                  unit: "tập con",
+                  explanation: "Tập hợp $A$ có $n = 4$ phần tử nên số tập hợp con của $A$ là $2^4 = 16$."
+                },
+                {
+                  id: "b2_p2_q2",
+                  question: "Cho hai tập hợp $A = [-4; 3]$ và $B = (-1; 6)$. Có bao nhiêu số nguyên thuộc tập hợp $A \\cap B$?",
+                  answer: "4",
+                  unit: "số nguyên",
+                  explanation: "Ta có $A \\cap B = (-1; 3]$. Các số nguyên thuộc $(-1; 3]$ là $0, 1, 2, 3$. Vậy có <strong>4</strong> số nguyên."
+                },
+                {
+                  id: "b2_p2_q3",
+                  question: "Lớp 10B có $40$ học sinh. Trong đợt thi đua, có $22$ em đạt điểm giỏi môn Toán, $18$ em đạt điểm giỏi môn Lý và $10$ em đạt điểm giỏi cả hai môn Toán và Lý. Hỏi lớp 10B có bao nhiêu học sinh đạt điểm giỏi ít nhất một trong hai môn Toán hoặc Lý?",
+                  answer: "30",
+                  unit: "học sinh",
+                  explanation: "Áp dụng công thức $n(A \\cup B) = n(A) + n(B) - n(A \\cap B) = 22 + 18 - 10 = 30$ (học sinh)."
+                }
+              ],
+              part3: [
+                {
+                  id: "b2_p3_q1",
+                  question: "Cho hai tập hợp $A = (-\\infty; 1]$ và $B = (-2; 4)$. Hãy xác định các tập hợp sau và biểu diễn kết quả trên trục số:<br/>a) $A \\cap B$ và $A \\cup B$.<br/>b) $A \\setminus B$ và $C_{\\mathbb{R}} B$.",
+                  rubric: "• <strong>Ý a (1.5 điểm):</strong><br/>- $A \\cap B = (-2; 1]$ (0.75đ).<br/>- $A \\cup B = (-\\infty; 4)$ (0.75đ).<br/><br/>• <strong>Ý b (1.5 điểm):</strong><br/>- $A \\setminus B = (-\\infty; -2]$ (0.75đ).<br/>- $C_{\\mathbb{R}} B = \\mathbb{R} \\setminus (-2; 4) = (-\\infty; -2] \\cup [4; +\\infty)$ (0.75đ)."
+                },
+                {
+                  id: "b2_p3_q2",
+                  question: "Cho hai tập hợp khác rỗng $A = [m - 1; 4]$ và $B = (-2; 2m + 2)$ với $m \\in \\mathbb{R}$. Tìm tất cả các giá trị của tham số $m$ để $A \\subset B$.",
+                  rubric: "• <strong>Điều kiện để $A, B$ khác rỗng (0.5 điểm):</strong><br/>$\\begin{cases} m - 1 \\le 4 \\\\ -2 < 2m + 2 \\end{cases} \\Leftrightarrow \\begin{cases} m \\le 5 \\\\ m > -2 \\end{cases} \\Leftrightarrow -2 < m \\le 5$.<br/><br/>• <strong>Điều kiện để $A \\subset B$ (1.0 điểm):</strong><br/>$A \\subset B \\Leftrightarrow \\begin{cases} -2 < m - 1 \\\\ 4 < 2m + 2 \\end{cases} \\Leftrightarrow \\begin{cases} m > -1 \\\\ m > 1 \\end{cases} \\Leftrightarrow m > 1$.<br/>Kết hợp điều kiện ta được $1 < m \\le 5$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        id: "chap2",
+        title: "Chương II: Bất phương trình và hệ bất phương trình bậc nhất hai ẩn",
+        shortTitle: "Chương II",
+        lessons: [
+          {
+            id: "bai3",
+            number: "Bài 3",
+            title: "Bất phương trình bậc nhất hai ẩn",
+            isFull: false,
+            summary: "Bất phương trình bậc nhất hai ẩn $x, y$ có dạng tổng quát là $ax + by \\le c$ (hoặc $<, \\ge, >$) trong đó $a, b, c$ là những số thực đã cho, $a$ và $b$ không đồng thời bằng $0$. Miền nghiệm của bất phương trình bậc nhất hai ẩn là một nửa mặt phẳng có bờ là đường thẳng $d: ax + by = c$."
+          },
+          {
+            id: "bai4",
+            number: "Bài 4",
+            title: "Hệ bất phương trình bậc nhất hai ẩn",
+            isFull: false,
+            summary: "Hệ bất phương trình bậc nhất hai ẩn là một hệ gồm hai hay nhiều bất phương trình bậc nhất hai ẩn $x, y$. Miền nghiệm của hệ là giao các miền nghiệm của các bất phương trình trong hệ (thường là một miền đa giác lồi), ứng dụng trực tiếp để giải các bài toán tối ưu kinh tế, sản xuất."
+          }
+        ]
+      },
+      {
+        id: "chap3",
+        title: "Chương III: Hệ thức lượng trong tam giác",
+        shortTitle: "Chương III",
+        lessons: [
+          {
+            id: "bai5",
+            number: "Bài 5",
+            title: "Giá trị lượng giác của một góc từ 0° đến 180°",
+            isFull: false,
+            summary: "Mở rộng khái niệm $\\sin\\alpha, \\cos\\alpha, \\tan\\alpha, \\cot\\alpha$ trên nửa đường tròn đơn vị với $0^\\circ \\le \\alpha \\le 180^\\circ$. Hai góc bù nhau $\\alpha$ và $180^\\circ - \\alpha$ có $\\sin(180^\\circ - \\alpha) = \\sin\\alpha$, còn $\\cos, \\tan, \\cot$ đối nhau."
+          },
+          {
+            id: "bai6",
+            number: "Bài 6",
+            title: "Hệ thức lượng trong tam giác",
+            isFull: false,
+            summary: "Định lí Côsin ($a^2 = b^2 + c^2 - 2bc\\cos A$), Định lí Sin ($\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} = 2R$) và các công thức tính diện tích tam giác ($S = \\frac{1}{2}ab\\sin C = \\sqrt{p(p-a)(p-b)(p-c)}$)."
+          }
+        ]
+      },
+      {
+        id: "chap4",
+        title: "Chương IV: Vectơ",
+        shortTitle: "Chương IV",
+        lessons: [
+          {
+            id: "bai7",
+            number: "Bài 7",
+            title: "Các khái niệm mở đầu",
+            isFull: false,
+            summary: "Vectơ là một đoạn thẳng có hướng. Hai vectơ cùng phương nếu giá của chúng song song hoặc trùng nhau. Hai vectơ bằng nhau nếu chúng có cùng hướng và cùng độ dài."
+          },
+          {
+            id: "bai8",
+            number: "Bài 8",
+            title: "Tổng và hiệu của hai vectơ",
+            isFull: false,
+            summary: "Quy tắc ba điểm ($\\vec{AB} + \\vec{BC} = \\vec{AC}$), quy tắc hình bình hành ($\\vec{AB} + \\vec{AD} = \\vec{AC}$), quy tắc hiệu ($\\vec{OB} - \\vec{OA} = \\vec{AB}$) và tính chất trung điểm, trọng tâm tam giác."
+          },
+          {
+            id: "bai9",
+            number: "Bài 9",
+            title: "Tích của một vectơ với một số",
+            isFull: false,
+            summary: "Tích của số thực $k \\ne 0$ với vectơ $\\vec{a} \\ne \\vec{0}$ là một vectơ kí hiệu $k\\vec{a}$, cùng hướng với $\\vec{a}$ nếu $k > 0$, ngược hướng nếu $k < 0$ và có độ dài $|k|\\cdot|\\vec{a}|$."
+          },
+          {
+            id: "bai10",
+            number: "Bài 10",
+            title: "Vectơ trong mặt phẳng tọa độ",
+            isFull: false,
+            summary: "Biểu diễn tọa độ của điểm và vectơ trong hệ trục tọa độ $Oxy$: $\\vec{u} = x\\vec{i} + y\\vec{j} \\Leftrightarrow \\vec{u} = (x; y)$. Công thức tọa độ trung điểm, trọng tâm và độ dài đoạn thẳng."
+          },
+          {
+            id: "bai11",
+            number: "Bài 11",
+            title: "Tích vô hướng của hai vectơ",
+            isFull: false,
+            summary: "Tích vô hướng $\\vec{a}\\cdot\\vec{b} = |\\vec{a}|\\cdot|\\vec{b}|\\cdot\\cos(\\vec{a}, \\vec{b})$. Biểu thức tọa độ: $\\vec{a}\\cdot\\vec{b} = x_1x_2 + y_1y_2$. Hai vectơ vuông góc khi và chỉ khi tích vô hướng bằng $0$."
+          }
+        ]
+      },
+      {
+        id: "chap5",
+        title: "Chương V: Các số đặc trưng của mẫu số liệu không ghép nhóm",
+        shortTitle: "Chương V",
+        lessons: [
+          {
+            id: "bai12",
+            number: "Bài 12",
+            title: "Số gần đúng và sai số",
+            isFull: false,
+            summary: "Sai số tuyệt đối $\\Delta_a = |a - \\bar{a}|$, độ chính xác $d$, sai số tương đối $\\delta_a = \\frac{\\Delta_a}{|a|}$ và quy tắc làm tròn số gần đúng."
+          },
+          {
+            id: "bai13",
+            number: "Bài 13",
+            title: "Các số đặc trưng đo xu thế trung tâm",
+            isFull: false,
+            summary: "Số trung bình cộng ($\\bar{x}$), trung vị ($M_e$), tứ phân vị ($Q_1, Q_2, Q_3$) và mốt ($M_o$) của mẫu số liệu."
+          },
+          {
+            id: "bai14",
+            number: "Bài 14",
+            title: "Các số đặc trưng đo độ phân tán",
+            isFull: false,
+            summary: "Khoảng biến thiên ($R = x_{\\max} - x_{\\min}$), khoảng tứ phân vị ($\\Delta_Q = Q_3 - Q_1$), phương sai ($s^2$), độ lệch chuẩn ($s$) và cách phát hiện giá trị bất thường."
+          }
+        ]
+      }
+    ];
+
+    // ==================== TRẠNG THÁI ỨNG DỤNG ====================
+    const state = {
+      currentLessonId: "bai1",
+      currentTab: "theory", // 'theory' | 'types' | 'quiz'
+      expandedChapters: { chap1: true, chap2: true, chap3: false, chap4: false, chap5: false },
+      searchQuery: "",
+      // Lưu trạng thái làm bài tự luyện theo từng lessonId
+      quizState: {}
+    };
+
+    function getQuizSession(lessonId) {
+      if (!state.quizState[lessonId]) {
+        state.quizState[lessonId] = {
+          part1Answers: {}, // { questionId: selectedOptionIndex }
+          part2Answers: {}, // { questionId: stringValue }
+          part3Notes: {},   // { questionId: textNote }
+          submitted: false,
+          scoreInfo: null
+        };
+      }
+      return state.quizState[lessonId];
+    }
+
+    // ==================== TIỆN ÍCH RENDER KATEX & TOAST ====================
+    function renderMath(container = document.body) {
+      if (window.renderMathInElement) {
+        renderMathInElement(container, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    let toastTimeout;
+    function showToast(msg) {
+      const box = document.getElementById("toast-box");
+      const text = document.getElementById("toast-message");
+      text.textContent = msg;
+      box.classList.remove("translate-y-20", "opacity-0");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add("translate-y-20", "opacity-0");
+      }, 3000);
+    }
+
+    function findLessonById(lessonId) {
+      for (const chap of CURRICULUM_DATA) {
+        const found = chap.lessons.find((l) => l.id === lessonId);
+        if (found) return { chapter: chap, lesson: found };
+      }
+      return { chapter: CURRICULUM_DATA[0], lesson: CURRICULUM_DATA[0].lessons[0] };
+    }
+
+    // ==================== DARK / LIGHT MODE ====================
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeLabel = document.getElementById("theme-label");
+
+    function initTheme() {
+      const saved = localStorage.getItem("toan10_theme");
+      if (saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        htmlEl.classList.add("dark");
+        themeLabel.textContent = "Chế độ sáng";
+      } else {
+        htmlEl.classList.remove("dark");
+        themeLabel.textContent = "Chế độ tối";
+      }
+    }
+
+    themeToggleBtn.addEventListener("click", () => {
+      htmlEl.classList.toggle("dark");
+      const isDark = htmlEl.classList.contains("dark");
+      localStorage.setItem("toan10_theme", isDark ? "dark" : "light");
+      themeLabel.textContent = isDark ? "Chế độ sáng" : "Chế độ tối";
+    });
+
+    // ==================== SIDEBAR & MOBILE DRAWER ====================
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+
+    function openMobileSidebar() {
+      sidebar.classList.remove("-translate-x-full");
+      backdrop.classList.remove("hidden");
+    }
+
+    function closeMobileSidebar() {
+      sidebar.classList.add("-translate-x-full");
+      backdrop.classList.add("hidden");
+    }
+
+    mobileMenuBtn.addEventListener("click", openMobileSidebar);
+    backdrop.addEventListener("click", closeMobileSidebar);
+
+    document.getElementById("lesson-search").addEventListener("input", (e) => {
+      state.searchQuery = e.target.value.trim().toLowerCase();
+      renderSidebar();
+    });
+
+    function renderSidebar() {
+      const nav = document.getElementById("sidebar-nav");
+      nav.innerHTML = "";
+
+      CURRICULUM_DATA.forEach((chap) => {
+        // Lọc bài học theo ô tìm kiếm
+        const filteredLessons = chap.lessons.filter(
+          (l) =>
+            l.title.toLowerCase().includes(state.searchQuery) ||
+            l.number.toLowerCase().includes(state.searchQuery) ||
+            chap.title.toLowerCase().includes(state.searchQuery)
+        );
+
+        if (state.searchQuery && filteredLessons.length === 0) return;
+
+        const isExpanded = state.searchQuery ? true : !!state.expandedChapters[chap.id];
+
+        const chapEl = document.createElement("div");
+        chapEl.className = "rounded-2xl overflow-hidden";
+
+        // Nút tiêu đề chương
+        const chapBtn = document.createElement("button");
+        chapBtn.className =
+          "w-full flex items-center justify-between gap-2 px-3 py-2.5 text-left rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 transition font-semibold text-xs text-slate-700 dark:text-slate-200";
+        chapBtn.innerHTML = `
+          <span class="leading-snug">${chap.title}</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 text-slate-400 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}"></i>
+        `;
+        chapBtn.addEventListener("click", () => {
+          state.expandedChapters[chap.id] = !state.expandedChapters[chap.id];
+          renderSidebar();
+        });
+        chapEl.appendChild(chapBtn);
+
+        // Danh sách bài học trong chương
+        if (isExpanded) {
+          const listEl = document.createElement("div");
+          listEl.className = "mt-1 pl-2 space-y-1";
+
+          filteredLessons.forEach((lesson) => {
+            const isActive = lesson.id === state.currentLessonId;
+            const itemBtn = document.createElement("button");
+            itemBtn.className = `w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl text-left text-sm transition-all ${
+              isActive
+                ? "bg-brand-600 text-white font-semibold shadow-sm shadow-brand-600/25"
+                : "text-slate-600 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800/60"
+            }`;
+
+            itemBtn.innerHTML = `
+              <div class="min-w-0 flex-1">
+                <div class="text-[11px] uppercase tracking-wider ${isActive ? "text-brand-100" : "text-slate-400 dark:text-slate-500"} font-bold">
+                  ${lesson.number}
+                </div>
+                <div class="truncate">${lesson.title}</div>
+              </div>
+              ${
+                lesson.isFull
+                  ? `<span class="shrink-0 w-2 h-2 rounded-full ${isActive ? "bg-white" : "bg-emerald-500"}" title="Đầy đủ nội dung tương tác"></span>`
+                  : `<span class="shrink-0 text-[10px] px-1.5 py-0.5 rounded-md ${isActive ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-400"}">Tóm tắt</span>`
+              }
+            `;
+
+            itemBtn.addEventListener("click", () => {
+              state.currentLessonId = lesson.id;
+              closeMobileSidebar();
+              renderAll();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            listEl.appendChild(itemBtn);
+          });
+
+          chapEl.appendChild(listEl);
+        }
+
+        nav.appendChild(chapEl);
+      });
+
+      lucide.createIcons();
+    }
+
+    // ==================== HEADER BÀI HỌC & TABS ====================
+    function renderLessonHeader() {
+      const { chapter, lesson } = findLessonById(state.currentLessonId);
+      const headerEl = document.getElementById("lesson-header");
+
+      headerEl.innerHTML = `
+        <div class="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-600 dark:text-brand-400 mb-2">
+          <span class="px-2.5 py-1 rounded-lg bg-brand-50 dark:bg-brand-950/80 border border-brand-200/70 dark:border-brand-800/60">
+            ${chapter.title}
+          </span>
+          <span>/</span>
+          <span class="text-slate-500 dark:text-slate-400">${lesson.number}</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          ${lesson.number}: ${lesson.title}
+        </h2>
+        ${
+          lesson.objectives
+            ? `<div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-sky-50 to-indigo-50/60 dark:from-slate-900 dark:to-slate-800/80 border border-sky-200/70 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300 mb-2">
+                  <i data-lucide="target" class="w-4 h-4"></i>
+                  <span>Mục tiêu bài học</span>
+                </div>
+                <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700 dark:text-slate-300">
+                  ${lesson.objectives
+                    .map(
+                      (obj) => `
+                    <li class="flex items-start gap-2">
+                      <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                      <span>${obj}</span>
+                    </li>`
+                    )
+                    .join("")}
+                </ul>
+              </div>`
+            : ""
+        }
+      `;
+    }
+
+    function updateTabButtons() {
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        const isCurrent = btn.dataset.tab === state.currentTab;
+        if (isCurrent) {
+          btn.className =
+            "tab-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white shadow-sm shadow-brand-600/20 transition-all";
+        } else {
+          btn.className =
+            "tab-btn flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all";
+        }
+      });
+    }
+
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.currentTab = btn.dataset.tab;
+        updateTabButtons();
+        renderTabContent();
+      });
+    });
+
+    // ==================== RENDER NỘI DUNG 3 TABS ====================
+    function renderPlaceholderLesson(lesson) {
+      return `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xs">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 text-xs font-semibold mb-4">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Chuyên đề tóm tắt kiến thức cốt lõi</span>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Tóm tắt trọng tâm ${lesson.number}: ${lesson.title}</h3>
+          <div class="p-5 rounded-2xl bg-sky-50/80 dark:bg-slate-800/80 border-l-4 border-brand-500 text-slate-700 dark:text-slate-200 leading-relaxed mb-6">
+            ${lesson.summary}
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+              Hệ thống bài tập phân dạng và đề tự luyện 2025 cho bài này đang được biên soạn bổ sung. Bạn có thể trải nghiệm đầy đủ 3 tab tương tác ở <strong>Chương I (Bài 1 & Bài 2)</strong>.
+            </p>
+            <button onclick="switchToLesson('bai1')" class="shrink-0 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition flex items-center gap-2">
+              <span>Học ngay Bài 1</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    window.switchToLesson = function (id) {
+      state.currentLessonId = id;
+      state.currentTab = "theory";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    // TAB 1: LÝ THUYẾT & VÍ DỤ MINH HỌA
+    function renderTheoryTab(lesson) {
+      if (!lesson.isFull) return renderPlaceholderLesson(lesson);
+
+      const blockStyles = {
+        definition: {
+          wrap: "bg-sky-50/80 dark:bg-sky-950/30 border-sky-200 dark:border-sky-800/70",
+          badge: "bg-brand-600 text-white",
+          icon: "bookmark"
+        },
+        theorem: {
+          wrap: "bg-indigo-50/80 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-800/70",
+          badge: "bg-indigo-600 text-white",
+          icon: "award"
+        },
+        note: {
+          wrap: "bg-amber-50/80 dark:bg-amber-950/25 border-amber-200 dark:border-amber-800/60",
+          badge: "bg-amber-500 text-white",
+          icon: "lightbulb"
+        }
+      };
+
+      return `
+        <div class="space-y-8">
+          ${lesson.theory
+            .map(
+              (sec) => `
+            <section class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+              <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white pb-3 mb-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
+                <span class="w-2 h-6 rounded-full bg-brand-500 inline-block"></span>
+                <span>${sec.heading}</span>
+              </h3>
+
+              <!-- Khung kiến thức trọng tâm -->
+              <div class="space-y-4">
+                ${sec.blocks
+                  .map((b) => {
+                    const st = blockStyles[b.type] || blockStyles.definition;
+                    return `
+                    <div class="p-4 sm:p-5 rounded-2xl border ${st.wrap}">
+                      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${st.badge} mb-2.5">
+                        <i data-lucide="${st.icon}" class="w-3.5 h-3.5"></i>
+                        <span>${b.title}</span>
+                      </div>
+                      <div class="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed">
+                        ${b.content}
+                      </div>
+                    </div>`;
+                  })
+                  .join("")}
+              </div>
+
+              <!-- Ví dụ minh họa -->
+              ${
+                sec.examples && sec.examples.length > 0
+                  ? `<div class="mt-6 space-y-4">
+                      ${sec.examples
+                        .map(
+                          (ex) => `
+                        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/80 overflow-hidden bg-slate-50/60 dark:bg-slate-800/40">
+                          <div class="px-4 py-3 bg-slate-100/90 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700/80 flex items-center gap-2 font-bold text-sm text-brand-700 dark:text-brand-300">
+                            <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                            <span>${ex.title}</span>
+                          </div>
+                          <div class="p-4 sm:p-5 space-y-3 text-sm sm:text-base">
+                            <div class="font-medium text-slate-900 dark:text-slate-100 leading-relaxed">
+                              ${ex.problem}
+                            </div>
+                            <div class="pt-3 border-t border-dashed border-slate-200 dark:border-slate-700">
+                              <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1.5 flex items-center gap-1.5">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                <span>Lời giải chi tiết</span>
+                              </div>
+                              <div class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ${ex.solution}
+                              </div>
+                            </div>
+                          </div>
+                        </div>`
+                        )
+                        .join("")}
+                    </div>`
+                  : ""
+              }
+            </section>`
+            )
+            .join("")}
+        </div>
+      `;
+    }
+
+    // TAB 2: PHÂN DẠNG BÀI TẬP
+    function renderTypesTab(lesson) {
+      if (!lesson.isFull) return renderPlaceholderLesson(lesson);
+
+      return `
+        <div class="space-y-7">
+          ${lesson.problemTypes
+            .map(
+              (pt, tIdx) => `
+            <section class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+              <div class="flex items-start gap-3 mb-4">
+                <div class="w-9 h-9 rounded-xl bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-extrabold flex items-center justify-center shrink-0">
+                  ${tIdx + 1}
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white pt-1">
+                  ${pt.typeTitle}
+                </h3>
+              </div>
+
+              <!-- Khung phương pháp giải -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-sky-50 to-blue-50/60 dark:from-sky-950/40 dark:to-slate-800/60 border border-sky-200 dark:border-sky-800/60 mb-6">
+                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300 mb-2">
+                  <i data-lucide="compass" class="w-4 h-4"></i>
+                  <span>Phương pháp giải</span>
+                </div>
+                <div class="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed">
+                  ${pt.method}
+                </div>
+              </div>
+
+              <!-- Danh sách bài tập mẫu -->
+              <div class="space-y-4">
+                ${pt.exercises
+                  .map((ex, eIdx) => {
+                    const solId = `sol_${lesson.id}_${tIdx}_${eIdx}`;
+                    return `
+                    <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+                      <div class="text-sm sm:text-base text-slate-900 dark:text-slate-100 leading-relaxed mb-4">
+                        ${ex.question}
+                      </div>
+
+                      <button
+                        type="button"
+                        onclick="toggleExerciseSolution('${solId}', this)"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800 hover:bg-brand-50 dark:hover:bg-slate-700 transition shadow-2xs"
+                      >
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        <span>Xem lời giải</span>
+                      </button>
+
+                      <div id="${solId}" class="hidden mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed bg-emerald-50/50 dark:bg-emerald-950/20 p-4 rounded-xl">
+                        <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1.5">
+                          Hướng dẫn giải chi tiết:
+                        </div>
+                        ${ex.solution}
+                      </div>
+                    </div>`;
+                  })
+                  .join("")}
+              </div>
+            </section>`
+            )
+            .join("")}
+        </div>
+      `;
+    }
+
+    window.toggleExerciseSolution = function (solId, btnEl) {
+      const box = document.getElementById(solId);
+      const isHidden = box.classList.contains("hidden");
+      if (isHidden) {
+        box.classList.remove("hidden");
+        btnEl.innerHTML = `<i data-lucide="eye-off" class="w-4 h-4"></i><span>Ẩn lời giải</span>`;
+        renderMath(box);
+      } else {
+        box.classList.add("hidden");
+        btnEl.innerHTML = `<i data-lucide="eye" class="w-4 h-4"></i><span>Xem lời giải</span>`;
+      }
+      lucide.createIcons();
+    };
+
+    // TAB 3: ĐỀ TỰ LUYỆN TƯƠNG TÁC (CẤU TRÚC ĐỀ THI MỚI 2025)
+    function renderQuizTab(lesson) {
+      if (!lesson.isFull) return renderPlaceholderLesson(lesson);
+
+      const qData = lesson.quiz;
+      const session = getQuizSession(lesson.id);
+      const optionLetters = ["A", "B", "C", "D"];
+
+      return `
+        <div class="space-y-8">
+
+          <!-- Bảng kết quả sau khi nộp bài -->
+          ${
+            session.submitted && session.scoreInfo
+              ? `<div class="p-6 rounded-3xl bg-gradient-to-br from-brand-600 to-indigo-700 text-white shadow-lg shadow-brand-600/20 fade-in">
+                  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-xs font-semibold mb-2">
+                        <i data-lucide="award" class="w-4 h-4"></i>
+                        <span>Kết quả tự luyện (Phần I & II)</span>
+                      </div>
+                      <h3 class="text-2xl sm:text-3xl font-extrabold">
+                        Điểm trắc nghiệm: ${session.scoreInfo.autoScore} / 7.0 điểm
+                      </h3>
+                      <p class="text-brand-100 text-sm mt-1">
+                        Phần I đúng <strong>${session.scoreInfo.p1Correct}/${qData.part1.length}</strong> câu • Phần II đúng <strong>${session.scoreInfo.p2Correct}/${qData.part2.length}</strong> câu • Phần III (3.0 điểm) hãy đối chiếu đáp án mẫu bên dưới.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onclick="resetQuiz('${lesson.id}')"
+                      class="px-5 py-3 rounded-2xl bg-white text-brand-700 hover:bg-brand-50 font-bold text-sm transition flex items-center justify-center gap-2 shrink-0 shadow-sm"
+                    >
+                      <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                      <span>Làm lại đề này</span>
+                    </button>
+                  </div>
+                </div>`
+              : ""
+          }
+
+          <!-- PHẦN I: TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN LỰA CHỌN -->
+          <section class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">
+                  PHẦN I. Trắc nghiệm nhiều phương án lựa chọn
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  Thí sinh trả lời từ câu 1 đến câu ${qData.part1.length}. Mỗi câu hỏi thí sinh chỉ chọn một phương án.
+                </p>
+              </div>
+              <span class="px-3 py-1 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 text-xs font-bold">
+                4.0 điểm
+              </span>
+            </div>
+
+            <div class="space-y-6">
+              ${qData.part1
+                .map((q, idx) => {
+                  const userChoice = session.part1Answers[q.id];
+                  return `
+                  <div class="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/20">
+                    <div class="font-semibold text-slate-900 dark:text-white mb-4 leading-relaxed">
+                      <span class="text-brand-600 dark:text-brand-400 font-extrabold">Câu ${idx + 1}:</span> ${q.question}
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-2.5">
+                      ${q.options
+                        .map((opt, optIdx) => {
+                          let btnStyle =
+                            "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-brand-400 dark:hover:border-brand-500 text-slate-700 dark:text-slate-200";
+                          let badgeStyle =
+                            "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
+
+                          if (!session.submitted) {
+                            if (userChoice === optIdx) {
+                              btnStyle =
+                                "border-brand-600 bg-brand-50/90 dark:bg-brand-950/60 dark:border-brand-500 text-brand-900 dark:text-brand-100 ring-2 ring-brand-500/20";
+                              badgeStyle = "bg-brand-600 text-white";
+                            }
+                          } else {
+                            if (optIdx === q.correct) {
+                              btnStyle =
+                                "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-100 ring-2 ring-emerald-500/20";
+                              badgeStyle = "bg-emerald-600 text-white";
+                            } else if (userChoice === optIdx && userChoice !== q.correct) {
+                              btnStyle =
+                                "border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-100";
+                              badgeStyle = "bg-rose-600 text-white";
+                            } else {
+                              btnStyle =
+                                "border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 opacity-65";
+                            }
+                          }
+
+                          return `
+                          <button
+                            type="button"
+                            ${session.submitted ? "disabled" : ""}
+                            onclick="selectPart1Option('${lesson.id}', '${q.id}', ${optIdx})"
+                            class="w-full p-3 rounded-xl border text-left text-sm transition-all flex items-center gap-3 ${btnStyle}"
+                          >
+                            <span class="w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 ${badgeStyle}">
+                              ${optionLetters[optIdx]}
+                            </span>
+                            <span class="leading-snug">${opt}</span>
+                          </button>`;
+                        })
+                        .join("")}
+                    </div>
+
+                    ${
+                      session.submitted
+                        ? `<div class="mt-4 p-3.5 rounded-xl bg-sky-50/90 dark:bg-slate-800/90 border border-sky-200/80 dark:border-slate-700 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                            <span class="font-bold text-brand-700 dark:text-brand-300">Giải thích:</span> ${q.explanation}
+                          </div>`
+                        : ""
+                    }
+                  </div>`;
+                })
+                .join("")}
+            </div>
+          </section>
+
+          <!-- PHẦN II: TRẮC NGHIỆM TRẢ LỜI NGẮN -->
+          <section class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">
+                  PHẦN II. Trắc nghiệm trả lời ngắn
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  Thí sinh điền đáp số bằng số (số nguyên hoặc số thập phân) vào ô tương ứng.
+                </p>
+              </div>
+              <span class="px-3 py-1 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
+                3.0 điểm
+              </span>
+            </div>
+
+            <div class="space-y-5">
+              ${qData.part2
+                .map((q, idx) => {
+                  const val = session.part2Answers[q.id] || "";
+                  const isCorrect =
+                    session.submitted &&
+                    normalizeNumberAnswer(val) === normalizeNumberAnswer(q.answer);
+
+                  return `
+                  <div class="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/20">
+                    <div class="font-semibold text-slate-900 dark:text-white mb-4 leading-relaxed">
+                      <span class="text-indigo-600 dark:text-indigo-400 font-extrabold">Câu ${idx + 1}:</span> ${q.question}
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                      <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        Đáp số của bạn:
+                      </label>
+                      <input
+                        type="text"
+                        inputmode="decimal"
+                        placeholder="Nhập số..."
+                        value="${val}"
+                        ${session.submitted ? "disabled" : ""}
+                        oninput="updatePart2Input('${lesson.id}', '${q.id}', this.value)"
+                        class="w-40 px-3.5 py-2 rounded-xl border text-sm font-bold outline-none transition ${
+                          !session.submitted
+                            ? "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-brand-500"
+                            : isCorrect
+                            ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200"
+                            : "border-rose-500 bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200"
+                        }"
+                      />
+                      <span class="text-xs text-slate-500 dark:text-slate-400">(${q.unit})</span>
+
+                      ${
+                        session.submitted
+                          ? isCorrect
+                            ? `<span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Chính xác!</span>`
+                            : `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 dark:text-rose-400"><i data-lucide="x-circle" class="w-4 h-4"></i> Đáp án đúng: ${q.answer}</span>`
+                          : ""
+                      }
+                    </div>
+
+                    ${
+                      session.submitted
+                        ? `<div class="mt-4 p-3.5 rounded-xl bg-sky-50/90 dark:bg-slate-800/90 border border-sky-200/80 dark:border-slate-700 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                            <span class="font-bold text-brand-700 dark:text-brand-300">Hướng dẫn:</span> ${q.explanation}
+                          </div>`
+                        : ""
+                    }
+                  </div>`;
+                })
+                .join("")}
+            </div>
+          </section>
+
+          <!-- PHẦN III: TỰ LUẬN -->
+          <section class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">
+                  PHẦN III. Tự luận
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  Trình bày lời giải ra giấy nháp hoặc khung ghi chú bên dưới, sau đó bấm "Nộp bài" để xem biểu điểm và đáp án chi tiết.
+                </p>
+              </div>
+              <span class="px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
+                3.0 điểm
+              </span>
+            </div>
+
+            <div class="space-y-6">
+              ${qData.part3
+                .map((q, idx) => {
+                  const noteVal = session.part3Notes[q.id] || "";
+                  return `
+                  <div class="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/20">
+                    <div class="font-semibold text-slate-900 dark:text-white mb-3 leading-relaxed">
+                      <span class="text-emerald-600 dark:text-emerald-400 font-extrabold">Câu ${idx + 1}:</span> ${q.question}
+                    </div>
+
+                    <textarea
+                      rows="3"
+                      placeholder="Ghi chú hướng giải hoặc đáp số nháp của bạn tại đây..."
+                      ${session.submitted ? "disabled" : ""}
+                      oninput="updatePart3Note('${lesson.id}', '${q.id}', this.value)"
+                      class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm text-slate-800 dark:text-slate-200 outline-none focus:border-brand-500 transition"
+                    >${noteVal}</textarea>
+
+                    ${
+                      session.submitted
+                        ? `<div class="mt-4 p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-200 dark:border-emerald-800/60 text-sm text-slate-800 dark:text-slate-200 leading-relaxed">
+                            <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
+                              <i data-lucide="file-check" class="w-4 h-4"></i>
+                              <span>Hướng dẫn chấm & Lời giải chi tiết</span>
+                            </div>
+                            ${q.rubric}
+                          </div>`
+                        : ""
+                    }
+                  </div>`;
+                })
+                .join("")}
+            </div>
+          </section>
+
+          <!-- Thanh hành động Nộp bài / Làm lại -->
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+            ${
+              !session.submitted
+                ? `<button
+                    type="button"
+                    onclick="submitQuiz('${lesson.id}')"
+                    class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-bold text-base shadow-lg shadow-brand-600/25 transition transform hover:-translate-y-0.5 flex items-center gap-2.5"
+                  >
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <span>Nộp bài & Chấm điểm</span>
+                  </button>`
+                : `<button
+                    type="button"
+                    onclick="resetQuiz('${lesson.id}')"
+                    class="px-7 py-3.5 rounded-2xl bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white font-bold text-sm transition flex items-center gap-2"
+                  >
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span>Làm lại bài kiểm tra</span>
+                  </button>`
+            }
+          </div>
+
+        </div>
+      `;
+    }
+
+    // ==================== XỬ LÝ TƯƠNG TÁC ĐỀ TỰ LUYỆN ====================
+    function normalizeNumberAnswer(str) {
+      if (!str) return "";
+      return str.toString().trim().replace(",", ".");
+    }
+
+    window.selectPart1Option = function (lessonId, questionId, optionIdx) {
+      const session = getQuizSession(lessonId);
+      if (session.submitted) return;
+      session.part1Answers[questionId] = optionIdx;
+      renderTabContent();
+    };
+
+    window.updatePart2Input = function (lessonId, questionId, value) {
+      const session = getQuizSession(lessonId);
+      if (session.submitted) return;
+      session.part2Answers[questionId] = value;
+    };
+
+    window.updatePart3Note = function (lessonId, questionId, value) {
+      const session = getQuizSession(lessonId);
+      if (session.submitted) return;
+      session.part3Notes[questionId] = value;
+    };
+
+    window.submitQuiz = function (lessonId) {
+      const { lesson } = findLessonById(lessonId);
+      const qData = lesson.quiz;
+      const session = getQuizSession(lessonId);
+
+      // Tính điểm Phần I (tối đa 4.0 điểm)
+      let p1Correct = 0;
+      qData.part1.forEach((q) => {
+        if (session.part1Answers[q.id] === q.correct) p1Correct++;
+      });
+      const p1Score = (p1Correct / qData.part1.length) * 4.0;
+
+      // Tính điểm Phần II (tối đa 3.0 điểm)
+      let p2Correct = 0;
+      qData.part2.forEach((q) => {
+        const userAns = normalizeNumberAnswer(session.part2Answers[q.id]);
+        const rightAns = normalizeNumberAnswer(q.answer);
+        if (userAns !== "" && userAns === rightAns) p2Correct++;
+      });
+      const p2Score = (p2Correct / qData.part2.length) * 3.0;
+
+      const autoScore = (Math.round((p1Score + p2Score) * 100) / 100).toFixed(2);
+
+      session.submitted = true;
+      session.scoreInfo = {
+        p1Correct,
+        p2Correct,
+        autoScore
+      };
+
+      renderTabContent();
+      window.scrollTo({ top: 180, behavior: "smooth" });
+      showToast(`Đã nộp bài! Bạn đạt ${autoScore}/7.0 điểm phần trắc nghiệm.`);
+    };
+
+    window.resetQuiz = function (lessonId) {
+      state.quizState[lessonId] = {
+        part1Answers: {},
+        part2Answers: {},
+        part3Notes: {},
+        submitted: false,
+        scoreInfo: null
+      };
+      renderTabContent();
+      showToast("Đã làm mới bài tự luyện. Chúc bạn làm bài tốt!");
+    };
+
+    // ==================== RENDER TỔNG THỂ ====================
+    function renderTabContent() {
+      const { lesson } = findLessonById(state.currentLessonId);
+      const container = document.getElementById("tab-content");
+
+      // Re-trigger animation
+      container.classList.remove("fade-in");
+      void container.offsetWidth;
+      container.classList.add("fade-in");
+
+      if (state.currentTab === "theory") {
+        container.innerHTML = renderTheoryTab(lesson);
+      } else if (state.currentTab === "types") {
+        container.innerHTML = renderTypesTab(lesson);
+      } else {
+        container.innerHTML = renderQuizTab(lesson);
+      }
+
+      lucide.createIcons();
+      renderMath(container);
+    }
+
+    function renderAll() {
+      renderSidebar();
+      renderLessonHeader();
+      updateTabButtons();
+      renderTabContent();
+      renderMath(document.getElementById("lesson-header"));
+    }
+
+    // Khởi chạy khi tải xong DOM & KaTeX
+    document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      renderAll();
+    });
+
+    window.addEventListener("load", () => {
+      renderMath(document.body);
+    });
+  </script>
+</body>
+</html>
